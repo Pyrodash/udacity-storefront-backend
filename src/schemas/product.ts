@@ -6,6 +6,7 @@ export const addSchema: AllowedSchema = {
     properties: {
         name: {
             type: 'string',
+            minLength: 1,
         },
         price: {
             type: 'number',

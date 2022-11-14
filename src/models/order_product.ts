@@ -21,4 +21,13 @@ export class OrderProductModel {
 
         return rows.map(this.mapRowToObject)
     }
+
+    static async add(orderId: number, orderProduct: OrderProduct): Promise<OrderProduct> {
+        await db.query({
+            text: 'INSERT INTO order_products(order_id, product_id, quantity) VALUES($1, $2, $3) RETURNING id',
+            values: [orderId, orderProduct.productId, orderProduct.quantity]
+        })
+
+        return orderProduct
+    }
 }

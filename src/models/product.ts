@@ -12,7 +12,7 @@ export default class ProductModel {
         return {
             id: <number>row.id,
             name: <string>row.name,
-            price: <number>row.price,
+            price: Number(row.price),
             category: <number>row.category_id
         }
     }

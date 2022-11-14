@@ -1,3 +1,7 @@
+export function isTest(): boolean {
+    return process.env.NODE_ENV === 'test'
+}
+
 export function readBoolean(key: string, def = false): boolean {
     const val = (process.env[key] || '').toLowerCase()
 

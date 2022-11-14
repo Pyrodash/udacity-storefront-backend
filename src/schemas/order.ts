@@ -1,14 +1,14 @@
 import { AllowedSchema } from 'express-json-validator-middleware'
 
-export const authSchema: AllowedSchema = {
+export const addSchema: AllowedSchema = {
     type: 'object',
-    required: ['id', 'password'],
+    required: ['productId', 'quantity'],
     properties: {
-        id: {
+        productId: {
             type: 'number',
         },
-        password: {
-            type: 'string',
+        quantity: {
+            type: 'number',
         },
     },
 }

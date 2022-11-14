@@ -6,12 +6,15 @@ export const addSchema: AllowedSchema = {
     properties: {
         firstName: {
             type: 'string',
+            minLength: 1,
         },
         lastName: {
             type: 'string',
+            minLength: 1,
         },
         password: {
             type: 'string',
+            minLength: 1,
         },
     },
 }

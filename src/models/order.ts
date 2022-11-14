@@ -53,4 +53,22 @@ export class OrderModel {
             return null
         }
     }
+
+    static async add(order: Omit<Order, 'id'>): Promise<Order> {
+        const query = await db.query({
+            text: 'INSERT INTO orders(user_id, status) VALUES($1, $2) RETURNING id',
+            values: [order.userId, order.status]
+        })
+
+        const { id } = query.rows[0]
+
+        for (const orderProduct of order.products) {
+            await OrderProductModel.add(id, orderProduct)
+        }
+
+        return {
+            id,
+            ...order,
+        }
+    }
 }
