@@ -9,9 +9,7 @@ import { logger } from '../utils/logger'
 
 const router = express.Router()
 
-router.use(authMiddleware)
-
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', authMiddleware, async (req: Request, res: Response) => {
     try {
         const users = await UserModel.getAll()
 
@@ -39,7 +37,7 @@ router.post(
     }
 )
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authMiddleware, async (req, res) => {
     const userId = Number(req.params.id)
         
     if (!userId) {
