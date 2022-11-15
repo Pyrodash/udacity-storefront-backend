@@ -24,12 +24,30 @@ These are the notes from a meeting with the frontend developer that describe wha
 - name
 - price
 - category
+Schema:
+```
+Table: products (
+    id: int,
+    name: varchar,
+    price: decimal,
+    category_id: int
+)
+```
 
 #### User
 - id
 - firstName
 - lastName
 - password
+Schema:
+```
+Table: users (
+    id: int,
+    first_name: varchar,
+    last_name: varchar,
+    password: varchar
+)
+```
 
 #### Orders
 - id
@@ -37,4 +55,18 @@ These are the notes from a meeting with the frontend developer that describe wha
 - quantity of each product in the order
 - user_id
 - status of order (active or complete)
+Schema:
+```
+Table: orders (
+    id: int
+    user_id: int [foreign key to users table]
+    status: int
+)
 
+Table: order_products (
+    id: int
+    order_id: int [foreign key to orders table],
+    product_id: int [foreign key to products table],
+    quantity: int
+)
+```
