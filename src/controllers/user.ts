@@ -6,6 +6,7 @@ import { addSchema } from '../schemas/user'
 import { validate } from '../utils/validator'
 import Config from '../config'
 import { logger } from '../utils/logger'
+import { signToken } from '../utils/auth'
 
 const router = express.Router()
 
@@ -28,8 +29,9 @@ router.post(
             req.body.password = await bcrypt.hash(req.body.password, Config.bcryptSaltRounds)
         
             const user = await UserModel.add(req.body)
+            const token = await signToken(user.id)
 
-            res.send({ user })
+            res.send({ user, token })
         } catch (error) {
             logger.error(error)
             res.status(500).send({ message: 'Server Error' })

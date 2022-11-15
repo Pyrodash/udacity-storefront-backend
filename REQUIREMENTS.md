@@ -62,7 +62,13 @@ Table: orders (
     user_id: int [foreign key to users table]
     status: int
 )
+```
 
+#### Order products
+- product id
+- quantity
+Schema:
+```
 Table: order_products (
     id: int
     order_id: int [foreign key to orders table],

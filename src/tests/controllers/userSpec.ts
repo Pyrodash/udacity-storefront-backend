@@ -2,21 +2,14 @@ import 'jasmine'
 import supertest from 'supertest'
 import { User } from '../../models/user'
 import { app } from '../../server'
-import { signToken } from '../../utils/auth'
 
 const request = supertest(app)
-const userId = 1
 
 let token: string
 let authHeader: string
 
 export default function() {
     describe('User Suite', function() {
-        beforeAll(async () => {
-            token = await signToken(userId)
-            authHeader = `Bearer ${token}`
-        })
-
         it('won\'t work without a token', async () => {
             const res = await request.get('/users')
             
@@ -32,7 +25,6 @@ export default function() {
 
             const res = await request
                 .post('/users')
-                .set('Authorization', authHeader)
                 .send(data)
             
             expect(res.status).toBe(400)
@@ -47,20 +39,22 @@ export default function() {
 
             const res = await request
                 .post('/users')
-                .set('Authorization', authHeader)
                 .send(data)
             
             expect(res.status).toBe(200)
-            expect(res.body).toEqual({
+            expect(res.body).toEqual(jasmine.objectContaining({
                 user: jasmine.objectContaining({
                     id: 1,
                     firstName: data.firstName,
                     lastName: data.lastName,
                 })
-            })
+            }))
+
+            token = res.body.token
+            authHeader = `Bearer ${token}`
         })
 
-        it('can get a list of users', async () => {
+        it('can get a list of users', async () => {            
             const res = await request
                 .get('/users')
                 .set('Authorization', authHeader)

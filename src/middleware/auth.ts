@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import jwt from 'jwt-promisify'
 import Config from '../config'
 import { extractBearerToken } from '../utils/auth'
+import { logger } from '../utils/logger'
 
 export default async function authMiddleware(req: Request, res: Response, next: NextFunction): Promise<void> {
     const token = extractBearerToken(req.headers.authorization || '')
@@ -12,6 +13,7 @@ export default async function authMiddleware(req: Request, res: Response, next: 
 
         next()
     } catch (err) {
+        logger.error(err)
         res.status(401).send({ message: 'Unauthorized' })
     }
 }

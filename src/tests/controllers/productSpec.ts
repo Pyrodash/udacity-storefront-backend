@@ -13,7 +13,7 @@ let authHeader: string
 export default function() {
     describe('Product Suite', function() {
         beforeAll(async () => {
-            token = await signToken(0)
+            token = await signToken(1)
             authHeader = `Bearer ${token}`
         })
 
@@ -24,6 +24,8 @@ export default function() {
         })
 
         it('won\'t add a product with missing data', async () => {
+            console.log(authHeader)
+
             const data = {
                 name: null,
                 price: 200.5,
